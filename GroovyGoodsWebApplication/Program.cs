@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<GroovyGoodsContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefaultConnectoin")));
+    builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
