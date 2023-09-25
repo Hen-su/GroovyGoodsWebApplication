@@ -1,18 +1,125 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+
+/* login form */
+
+.Contactlogo-row {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+Contactbutton {
+    background-color: white;
+    font-size: 14px;
+    border: 2px solid #94b9c4;
+    padding: 10px;
+    transition-duration: .4s;
+}
+
+    Contactbutton:hover {
+        background-color: #567c86;
+        color: white;
+    }
+
+.Contactbody {
+    height: 394px;
+    display: flex; /*in middle*/
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    box-sizing: border-box;
+    background: linear-gradient(0deg, #80bfff 0%, white 100%);
+    /*background*/
+}
+
+textarea {
+    width: 100%;
+}
+
+.reg-container {
+    max-width: 700px;
+    margin-bottom: 120px;
+    width: 100%;
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+    /*make this in border box*/
+}
+
+    .reg-container p {
+        font-size: 14px;
+        font-weight: 400;
+        text-align: center;
+        line-height: 2em;
+        /* border box content <p>*/
+    }
+
+    .reg-container .title {
+        font-size: 25px;
+        font-weight: 600;
+        position: relative;
+        text-align: center;
+        /* border box title*/
+    }
+
+form .user-details .input-box {
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+    /*Contain input box as desire width*/
+}
+
+form .input-box span.details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    /*gap for each li*/
+}
+
+.user-details .input-box input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    /*inout box style*/
+}
+
+form .button input {
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #76a9c9;
+}
+
+
+
+/* login form */
