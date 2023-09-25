@@ -1,0 +1,17 @@
+ID   | Company Name          | Contact Name      | Email Address                 | Phone Number  | Address                   | City         | Postcode  | Country
+-------------------------------------------------------------------------------------------------------------------------------
+1    | SoundWave Supplies    | John Smith        | john@example.com             | 021-123-4567  | 123 Music Street          | Auckland     | 1010      | New Zealand
+2    | Harmony Audio         | Sarah Johnson     | sarah@example.com            | 027-987-6543  | 456 Audio Avenue          | Wellington   | 6011      | New Zealand
+3    | Rhythm House Music    | David Brown       | david@example.com            | 021-234-5678  | 789 Beat Road             | Christchurch  | 8011      | New Zealand
+4    | Melody World          | Emily Davis       | emily@example.com            | 027-876-5432  | 321 Harmony Lane          | Dunedin      | 9016      | New Zealand
+5    | Sonic Sounds          | Michael Lee       | michael@example.com          | 021-345-6789  | 555 Groove Street          | Hamilton     | 3204      | New Zealand
+6    | Tempo Tunes           | Lisa Wilson       | lisa@example.com             | 027-765-4321  | 888 Tempo Avenue          | Tauranga     | 3110      | New Zealand
+7    | Note Nirvana          | Kevin Anderson    | kevin@example.com            | 021-456-7890  | 222 Melody Lane           | Napier       | 4110      | New Zealand
+8    | BeatBox Enterprises   | Olivia Brown      | olivia@example.com           | 027-654-3210  | 777 Rhythm Road           | Palmerston North | 4410  | New Zealand
+9    | Harmonic Haven        | Daniel White      | daniel@example.com           | 021-567-8901  | 999 Chord Street           | Nelson       | 7010      | New Zealand
+10   | SoundScape Suppliers  | Jessica Green     | jessica@example.com          | 027-543-2109  | 444 Note Avenue           | New Plymouth | 4310   | New Zealand
+11   | Groove Galaxy         | William Taylor    | william@example.com          | 021-678-9012  | 111 Riff Road             | Invercargill | 9810   | New Zealand
+12   | Melodic Magic         | Sophia Harris     | sophia@example.com           | 027-432-1098  | 666 Melody Lane           | Rotorua      | 3010      | New Zealand
+13   | Tempo Trends          | Ethan Martinez    | ethan@example.com            | 021-789-0123  | 333 Tempo Street          | Whangarei    | 0110      | New Zealand
+14   | Harmony Hut           | Olivia Clark      | olivia@example.com           | 027-321-0987  | 777 Harmony Avenue        | Gisborne     | 4010      | New Zealand
+15   | Sonic Supplies        | Mason Wright      | mason@example.com            | 021-890-1234  | 999 Sonic Road            | Queenstown   | 9300      | New Zealand

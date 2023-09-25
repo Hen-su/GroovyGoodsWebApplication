@@ -1,0 +1,17 @@
+ID   | Name                     | Description                                | List Price   | Stock
+---------------------------------------------------------------------------------------------
+1    | Acoustic Guitar          | High-quality acoustic guitar with spruce top | $299.99      | 50
+2    | Electric Keyboard        | 61-key electric keyboard with built-in sounds | $199.99      | 30
+3    | Drum Set                 | Complete 5-piece drum set with cymbals      | $499.99      | 20
+4    | Bass Guitar              | Precision bass guitar with maple neck        | $349.99      | 40
+5    | Digital Piano            | 88-key digital piano with weighted keys     | $699.99      | 15
+6    | Violin                   | Handcrafted violin with bow and case        | $199.99      | 25
+7    | Synthesizer              | Professional synthesizer with MIDI support  | $799.99      | 10
+8    | Trumpet                  | Brass trumpet with carrying case            | $249.99      | 35
+9    | Saxophone                | Alto saxophone with accessories             | $449.99      | 18
+10   | Drumsticks               | Set of 5A drumsticks for drummers           | $12.99       | 100
+11   | Guitar Strings           | Pack of 6 electric guitar strings           | $8.99        | 200
+12   | Microphone               | Condenser microphone with shock mount       | $89.99       | 50
+13   | Music Stand              | Adjustable folding music stand              | $24.99       | 75
+14   | Keyboard Stand           | Double-braced X-style keyboard stand         | $39.99       | 60
+15   | Headphones               | Studio-quality over-ear headphones          | $79.99       | 45

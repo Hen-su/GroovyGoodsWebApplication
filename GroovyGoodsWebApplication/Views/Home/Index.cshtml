@@ -3,6 +3,45 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <br>
+    <h1>Welcome! GroovyGoods Admins.</h1>     <br>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
 </div>
+
+
+<div class="Contactbody">
+    <div class="reg-container">
+        <div class="Contactcontent">
+            <h5>Please Login your credential here</h5> <br>
+            <form asp-action="Index" asp-controller="Home" method="post">
+                <div class="user-details">
+
+                    <div class="input-box">
+                        <span class="details">Name: </span>
+                        <input type="text" placeholder="Enter your name" name="Studentname" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Password: </span>
+                        <input type="text" placeholder="Enter your password" name="Address" required>
+                    </div>
+                </div>
+                <br>
+                <div class="Contactbutton">
+                    <input type="submit" class="btn btn-info" value="Login">
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

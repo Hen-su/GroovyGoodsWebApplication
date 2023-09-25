@@ -1,0 +1,7 @@
+ID   | Name              | Email Address         | Phone Number
+------------------------------------------------------------
+1    | Adam Johnson      | adam@example.com      | 021-111-2233
+2    | Rachel Wilson     | rachel@example.com    | 027-222-3344
+3    | Mark Davis        | mark@example.com      | 021-333-4455
+4    | Laura Smith       | laura@example.com     | 027-444-5566
+5    | Daniel Brown      | daniel@example.com    | 021-555-6677
