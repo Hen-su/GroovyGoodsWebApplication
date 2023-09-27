@@ -16,4 +16,6 @@ public partial class SupplierProduct
     public virtual Product PidNavigation { get; set; } = null!;
 
     public virtual Supplier SidNavigation { get; set; } = null!;
+
 }
+

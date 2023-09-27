@@ -3,35 +3,39 @@
 @{
     ViewData["Title"] = "Create";
 }
-
+<br>
 <h1>Create</h1>
-
+<br>
 <h4>SupplierProduct</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br>
             <div class="form-group">
-                <label asp-for="Sid" class="control-label"></label>
-                <select asp-for="Sid" class ="form-control" asp-items="ViewBag.Sid"></select>
+                <label for="Sid" class="control-label" style="font-weight: bold;">Supplier Name</label><br><br>
+                <select asp-for="Sid" class="form-control" asp-items="ViewBag.Sid"></select>
             </div>
+            <br>
             <div class="form-group">
-                <label asp-for="Pid" class="control-label"></label>
-                <select asp-for="Pid" class ="form-control" asp-items="ViewBag.Pid"></select>
+                <label for="Pid" class="control-label" style="font-weight: bold;">Product Name</label><br><br>
+                <select asp-for="Pid" class="form-control" asp-items="ViewBag.Pid"></select>
             </div>
+            <br>
             <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
+                <label asp-for="Cost" class="control-label" style="font-weight: bold;"></label><br><br>
                 <input asp-for="Cost" class="form-control" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<br>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

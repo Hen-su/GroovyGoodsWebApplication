@@ -12,31 +12,30 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" ><img src="images\Logo.png" />GroovyGoodsWebApplication</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" ><img src="images\Logo.png" height="70" width="110"/> GroovyGoods</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="collapse navbar-collapse" id="navbarColor01">
                         @{
                             if (User.Identity.IsAuthenticated)
                         {
-                            <ul class="navbar-nav flex-grow-1">
+                            <ul class="navbar-nav me-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Product Catalogue</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index" style="font-size: 25px; padding:13px;">Product Catalogue</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">Suppliers</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Suppliers" asp-action="Index" style="font-size: 25px; padding:13px;">Suppliers</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="SupplierProducts" asp-action="Index">Supplied Products</a>
-                                </li>
-                            </ul>
-                            <ul class="navbar-nav flex-grow-1" style="text-align:end">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a>
+                                    <a class="nav-link" asp-area="" asp-controller="SupplierProducts" asp-action="Index" style="font-size: 25px; padding:13px;">Supplied Products</a>
                                 </li>
                             </ul>
+
+                            <form class="d-flex" method="post" action="@Url.Action("Logout", "Login")">
+                                <button class="btn btn-secondary btn-lg my-2 my-sm-0" type="submit" style="margin-right: 30px; ">LogOut </button>
+                            </form>
+                         
                             } 
                         }
                 </div>
@@ -48,7 +47,15 @@
             @RenderBody()
         </main>
     </div>
-
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - GroovyGoodsWebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

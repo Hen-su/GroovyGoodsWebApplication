@@ -20,6 +20,96 @@ namespace GroovyGoodsWebApplication.Controllers
             _context = context;
         }
 
+
+        [HttpGet("Suppliers/Index")]
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        {
+            // Sorting parameters
+            ViewBag.CompanySortParm = string.IsNullOrEmpty(sortOrder) ? "company_desc" : "";
+            ViewBag.ContactNameSortParm = sortOrder == "contactName" ? "contactName_desc" : "contactName";
+            ViewBag.EmailSortParm = sortOrder == "email" ? "email_desc" : "email";
+            ViewBag.PhoneSortParm = sortOrder == "phone" ? "phone_desc" : "phone";
+            ViewBag.AddressSortParm = sortOrder == "address" ? "address_desc" : "address";
+            ViewBag.CitySortParm = sortOrder == "city" ? "city_desc" : "city";
+            ViewBag.PostcodeSortParm = sortOrder == "postcode" ? "postcode_desc" : "postcode";
+            ViewBag.CountrySortParm = sortOrder == "country" ? "country_desc" : "country";
+
+            // Get the list of suppliers
+            var suppliers = from s in _context.Suppliers
+                            select s;
+
+            // Filter by search string
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                suppliers = suppliers.Where(s =>
+                    s.Company.Contains(searchString) ||
+                    s.ContactName.Contains(searchString) ||
+                    s.Email.Contains(searchString) ||
+                    s.Phone.Contains(searchString) ||
+                    s.Address.Contains(searchString) ||
+                    s.City.Contains(searchString) ||
+                    s.Postcode.ToString().Contains(searchString) ||
+                    s.Country.Contains(searchString));
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "company":
+                    suppliers = suppliers.OrderBy(s => s.Company);
+                    break;
+                case "contactName":
+                    suppliers = suppliers.OrderBy(s => s.ContactName);
+                    break;
+                case "email":
+                    suppliers = suppliers.OrderBy(s => s.Email);
+                    break;
+                case "phone":
+                    suppliers = suppliers.OrderBy(s => s.Phone);
+                    break;
+                case "address":
+                    suppliers = suppliers.OrderBy(s => s.Address);
+                    break;
+                case "city":
+                    suppliers = suppliers.OrderBy(s => s.City);
+                    break;
+                case "postcode":
+                    suppliers = suppliers.OrderBy(s => s.Postcode);
+                    break;
+                case "country":
+                    suppliers = suppliers.OrderBy(s => s.Country);
+                    break;
+                case "contactName_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.ContactName);
+                    break;
+                case "email_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.Email);
+                    break;
+                case "phone_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.Phone);
+                    break;
+                case "address_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.Address);
+                    break;
+                case "city_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.City);
+                    break;
+                case "postcode_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.Postcode);
+                    break;
+                case "country_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.Country);
+                    break;
+                default:
+                    break;
+            }
+
+            // Execute the query and return the sorted and filtered list of suppliers
+            return View(await suppliers.ToListAsync());
+        }
+
+
+
         // GET: Suppliers
         public async Task<IActionResult> Index()
         {

@@ -21,6 +21,46 @@ namespace GroovyGoodsWebApplication.Controllers
             _context = context;
         }
 
+        [HttpGet("SupplierProducts/Index")]
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        {
+            // Sorting parameters
+            ViewBag.CostSortParm = string.IsNullOrEmpty(sortOrder) ? "cost_desc" : "";
+
+            // Get the list of supplier products with related Product and Supplier data
+            var supplierProducts = from sp in _context.SupplierProducts
+                                   .Include(sp => sp.PidNavigation) // Include Product
+                                   .Include(sp => sp.SidNavigation) // Include Supplier
+                                   select sp;
+
+            // Filter by search string
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                supplierProducts = supplierProducts.Where(sp =>
+                    sp.PidNavigation.Name.Contains(searchString) || // Access Product.Name
+                    sp.SidNavigation.Company.Contains(searchString) || // Access Supplier.Company
+                    sp.Cost.ToString().Contains(searchString));
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "cost":
+                    supplierProducts = supplierProducts.OrderBy(sp => sp.Cost);
+                    break;
+                case "cost_desc":
+                    supplierProducts = supplierProducts.OrderByDescending(sp => sp.Cost);
+                    break;
+                default:
+                    break;
+            }
+
+            // Execute the query and return the sorted and filtered list of supplier products
+            return View(await supplierProducts.ToListAsync());
+        }
+
+
+
         // GET: SupplierProducts
         public async Task<IActionResult> Index()
         {
@@ -51,8 +91,8 @@ namespace GroovyGoodsWebApplication.Controllers
         // GET: SupplierProducts/Create
         public IActionResult Create()
         {
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid");
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid");
+            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Name");
+            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Company");
             return View();
         }
 
@@ -124,8 +164,8 @@ namespace GroovyGoodsWebApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid", supplierProduct.Pid);
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid", supplierProduct.Sid);
+            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "name", supplierProduct.Pid);
+            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "company", supplierProduct.Sid);
             return View(supplierProduct);
         }
 

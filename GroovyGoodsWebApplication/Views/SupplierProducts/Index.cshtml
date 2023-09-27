@@ -3,12 +3,13 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
+<br>
+<h1>Supplied Products</h1>
+<br>
 <p>
-    <a asp-action="Create">Create New</a>
+    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Create")'">Create New</button>
 </p>
+
 <table class="table">
     <thead>
         <tr>
