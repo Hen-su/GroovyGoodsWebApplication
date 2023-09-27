@@ -19,7 +19,7 @@ public partial class Product
     [StringLength (255)]
     public string? Description { get; set; }
     [Required]
-    [RegularExpression(@"/^\d+$/", ErrorMessage = "Value must be positive")]
+    [RegularExpression(@"^\d{0,6}[.]?\d{1,2}$", ErrorMessage = "Price is invalid")]
     [DisplayName("List Price ($)")]
     [StringLength(9)]
     public decimal ListPrice { get; set; }
