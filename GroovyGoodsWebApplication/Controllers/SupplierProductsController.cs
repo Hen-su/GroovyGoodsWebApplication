@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GroovyGoodsWebApplication.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GroovyGoodsWebApplication.Controllers
 {
@@ -19,6 +20,25 @@ namespace GroovyGoodsWebApplication.Controllers
         public SupplierProductsController(GroovyGoodsContext context)
         {
             _context = context;
+        }
+
+        private void PopulateLists()
+        {
+            //Get list of products with id and name
+            var productsList = _context.Products.Select(p => new SelectListItem
+            {
+                Value = p.Pid.ToString(),
+                Text = $"{p.Pid} - {p.Name}"
+            }).ToList();
+            ViewData["Pid"] = new SelectList(productsList, "Value", "Text");
+
+            //Get list of suppliers with id and company name
+            var suppliersList = _context.Suppliers.Select(s => new SelectListItem
+            {
+                Value = s.Sid.ToString(),
+                Text = $"{s.Sid} - {s.Company}"
+            }).ToList();
+            ViewData["Sid"] = new SelectList(suppliersList, "Value", "Text");
         }
 
         // GET: SupplierProducts
@@ -51,8 +71,7 @@ namespace GroovyGoodsWebApplication.Controllers
         // GET: SupplierProducts/Create
         public IActionResult Create()
         {
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid");
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid");
+            PopulateLists();
             return View();
         }
 
@@ -63,14 +82,21 @@ namespace GroovyGoodsWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Spid,Sid,Pid,Cost")] SupplierProduct supplierProduct)
         {
-            if (ModelState.IsValid)
+            var sidExists = from s in _context.Suppliers
+                                where s.Sid == supplierProduct.Sid
+                                select s;
+
+            var pidExists = from p in _context.Products
+                                where  p.Pid == supplierProduct.Pid
+                                select p;
+
+            if (ModelState.IsValid || (!sidExists.IsNullOrEmpty() && !pidExists.IsNullOrEmpty()))
             {
                 _context.Add(supplierProduct);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid", supplierProduct.Pid);
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid", supplierProduct.Sid);
+            PopulateLists();
             return View(supplierProduct);
         }
 
@@ -87,8 +113,7 @@ namespace GroovyGoodsWebApplication.Controllers
             {
                 return NotFound();
             }
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid", supplierProduct.Pid);
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid", supplierProduct.Sid);
+            PopulateLists();
             return View(supplierProduct);
         }
 
@@ -104,8 +129,17 @@ namespace GroovyGoodsWebApplication.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var sidExists = from s in _context.Suppliers
+                            where s.Sid == supplierProduct.Sid
+                            select s;
+
+            var pidExists = from p in _context.Products
+                            where p.Pid == supplierProduct.Pid
+                            select p;
+                
+            if (ModelState.IsValid || (!sidExists.IsNullOrEmpty() && !pidExists.IsNullOrEmpty()))
             {
+                
                 try
                 {
                     _context.Update(supplierProduct);
@@ -124,8 +158,7 @@ namespace GroovyGoodsWebApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid", supplierProduct.Pid);
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid", supplierProduct.Sid);
+            PopulateLists();
             return View(supplierProduct);
         }
 
