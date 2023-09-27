@@ -48,6 +48,61 @@ namespace GroovyGoodsWebApplication.Controllers
             return View(await groovyGoodsContext.ToListAsync());
         }
 
+
+        [HttpGet("SupplierProducts/Index")]
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        {
+            // Sorting parameters
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CostSortParm = sortOrder == "cost" ? "cost_desc" : "cost";
+            ViewBag.CompanySortParm = sortOrder == "company" ? "company_desc" : "company";
+
+            // Get the list of supplier products
+            var supplierProducts = from sp in _context.SupplierProducts
+                                   select sp;
+
+            // Filter by search string
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                supplierProducts = supplierProducts.Where(sp =>
+                    sp.PidNavigation.Name.Contains(searchString) ||
+                    sp.SidNavigation.Company.Contains(searchString) ||
+                    sp.Cost.ToString().Contains(searchString));
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "name":
+                    supplierProducts = supplierProducts.OrderBy(sp => sp.PidNavigation.Name);
+                    break;
+                case "cost":
+                    supplierProducts = supplierProducts.OrderBy(sp => sp.Cost);
+                    break;
+                case "company":
+                    supplierProducts = supplierProducts.OrderBy(sp => sp.SidNavigation.Company);
+                    break;
+                case "name_desc":
+                    supplierProducts = supplierProducts.OrderByDescending(sp => sp.PidNavigation.Name);
+                    break;
+                case "cost_desc":
+                    supplierProducts = supplierProducts.OrderByDescending(sp => sp.Cost);
+                    break;
+                case "company_desc":
+                    supplierProducts = supplierProducts.OrderByDescending(sp => sp.SidNavigation.Company);
+                    break;
+                default:                   
+                    break;
+            }
+
+            // Execute the query and return the sorted and filtered list of supplier products
+            return View(await supplierProducts.Include(sp => sp.PidNavigation).Include(sp => sp.SidNavigation).ToListAsync());
+        }
+
+
+
+
+
         // GET: SupplierProducts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
