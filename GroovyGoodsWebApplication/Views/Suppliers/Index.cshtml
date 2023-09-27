@@ -3,75 +3,63 @@
 @{
     ViewData["Title"] = "Index";
 }
+<br>
+<h1>Supplier List</h1>
 
-<h1>Index</h1>
-
+<br>
 <p>
-    <a asp-action="Create">Create New</a>
+    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Create")'">Create New</button>
 </p>
+
+<form class="d-flex" method="get" action="@Url.Action("Index", "Suppliers")">
+    <input class="form-control me-sm-2" type="search" name="SearchString" placeholder="Search">
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Company)
+                @Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContactName)
+                @Html.ActionLink("Contact Name", "Index", new { sortOrder = ViewBag.ContactNameSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                @Html.ActionLink("Phone", "Index", new { sortOrder = ViewBag.PhoneSortParm })
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Postcode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Country)
-            </th>
+
+ 
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Postcode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Country)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Sid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Sid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Sid">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+ 
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Sid">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Sid">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Sid">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+    

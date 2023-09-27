@@ -3,47 +3,55 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
+<br>
+<h1>Supplied Products</h1>
+<br>
 <p>
-    <a asp-action="Create">Create New</a>
+    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Create")'">Create New</button>
 </p>
+
+<form class="d-flex" method="get" action="@Url.Action("Index", "SupplierProducts")">
+    <input class="form-control me-sm-2" type="search" name="SearchString" placeholder="Search">
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+</form>
+
 <table class="table">
     <thead>
         <tr>
-
             <th>
-                @Html.DisplayNameFor(model => model.PidNavigation.Name)
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })             
+         
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SidNavigation.Company)
+                @Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySortParm })
+                 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cost)
+                @Html.ActionLink("Cost", "Index", new { sortOrder = ViewBag.CostSortParm })
+             
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.PidNavigation.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SidNavigation.Company)
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PidNavigation.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SidNavigation.Company)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Cost)
                 </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Spid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Spid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Spid">Delete</a>
-            </td>
-        </tr>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Spid">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Spid">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Spid">Delete</a>
+                </td>
+            </tr>
 }
     </tbody>
 </table>

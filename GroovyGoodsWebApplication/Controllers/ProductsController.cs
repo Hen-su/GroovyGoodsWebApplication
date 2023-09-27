@@ -20,6 +20,64 @@ namespace GroovyGoodsWebApplication.Controllers
             _context = context;
         }
 
+        [HttpGet("Products/Index")]
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        {
+            // Sorting parameters
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DescriptionSortParm = sortOrder == "description" ? "description_desc" : "description";
+            ViewBag.ListPriceSortParm = sortOrder == "listPrice" ? "listPrice_desc" : "listPrice";
+            ViewBag.StockSortParm = sortOrder == "stock" ? "stock_desc" : "stock";
+
+            // Get the list of products
+            var products = from p in _context.Products
+                           select p;
+
+            // Filter by search string
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p =>
+                    p.Name.Contains(searchString) ||
+                    p.Description.Contains(searchString));
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "name":
+                    products = products.OrderBy(p => p.Name);
+                    break;
+                case "description":
+                    products = products.OrderBy(p => p.Description);
+                    break;
+                case "listPrice":
+                    products = products.OrderBy(p => p.ListPrice);
+                    break;
+                case "stock":
+                    products = products.OrderBy(p => p.Stock);
+                    break;
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case "description_desc":
+                    products = products.OrderByDescending(p => p.Description);
+                    break;
+                case "listPrice_desc":
+                    products = products.OrderByDescending(p => p.ListPrice);
+                    break;
+                case "stock_desc":
+                    products = products.OrderByDescending(p => p.Stock);
+                    break;
+                default:
+                    break;
+            }
+
+            // Execute the query and return the sorted and filtered list of products
+            return View(await products.ToListAsync());
+        }
+
+
+
         // GET: Products
         public async Task<IActionResult> Index()
         {

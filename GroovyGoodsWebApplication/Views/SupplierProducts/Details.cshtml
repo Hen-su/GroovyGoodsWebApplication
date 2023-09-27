@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<br>
 <h1>Details</h1>
-
+<br>
 <div>
     <h4>SupplierProduct</h4>
     <hr />
@@ -17,16 +17,17 @@
             @Html.DisplayFor(model => model.Cost)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PidNavigation)
+
+            Product Name
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PidNavigation.Pid)
+            @Html.DisplayFor(model => model.PidNavigation.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SidNavigation)
+            Company
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SidNavigation.Sid)
+            @Html.DisplayFor(model => model.SidNavigation.Company)
         </dd>
     </dl>
 </div>
