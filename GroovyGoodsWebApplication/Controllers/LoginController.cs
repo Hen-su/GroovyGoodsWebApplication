@@ -44,8 +44,8 @@ namespace GroovyGoodsWebApplication.Controllers
                                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
                                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                                 HttpContext.SignInAsync(claimsPrincipal);
-                              return RedirectToAction("Index", "Products");
-                        }
+                                return RedirectToAction("Index", "Products");
+                            }
                         }
                     }
                 }

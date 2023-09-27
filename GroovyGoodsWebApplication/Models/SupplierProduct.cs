@@ -6,7 +6,7 @@ namespace GroovyGoodsWebApplication.Models;
 public partial class SupplierProduct
 {
     public int Spid { get; set; }
-
+    
     public int Sid { get; set; }
 
     public int Pid { get; set; }

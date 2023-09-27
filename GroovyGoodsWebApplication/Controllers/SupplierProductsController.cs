@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GroovyGoodsWebApplication.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GroovyGoodsWebApplication.Controllers
 {
@@ -21,45 +22,24 @@ namespace GroovyGoodsWebApplication.Controllers
             _context = context;
         }
 
-        [HttpGet("SupplierProducts/Index")]
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        private void PopulateLists()
         {
-            // Sorting parameters
-            ViewBag.CostSortParm = string.IsNullOrEmpty(sortOrder) ? "cost_desc" : "";
-
-            // Get the list of supplier products with related Product and Supplier data
-            var supplierProducts = from sp in _context.SupplierProducts
-                                   .Include(sp => sp.PidNavigation) // Include Product
-                                   .Include(sp => sp.SidNavigation) // Include Supplier
-                                   select sp;
-
-            // Filter by search string
-            if (!string.IsNullOrEmpty(searchString))
+            //Get list of products with id and name
+            var productsList = _context.Products.Select(p => new SelectListItem
             {
-                supplierProducts = supplierProducts.Where(sp =>
-                    sp.PidNavigation.Name.Contains(searchString) || // Access Product.Name
-                    sp.SidNavigation.Company.Contains(searchString) || // Access Supplier.Company
-                    sp.Cost.ToString().Contains(searchString));
-            }
+                Value = p.Pid.ToString(),
+                Text = $"{p.Pid} - {p.Name}"
+            }).ToList();
+            ViewData["Pid"] = new SelectList(productsList, "Value", "Text");
 
-            // Apply sorting
-            switch (sortOrder)
+            //Get list of suppliers with id and company name
+            var suppliersList = _context.Suppliers.Select(s => new SelectListItem
             {
-                case "cost":
-                    supplierProducts = supplierProducts.OrderBy(sp => sp.Cost);
-                    break;
-                case "cost_desc":
-                    supplierProducts = supplierProducts.OrderByDescending(sp => sp.Cost);
-                    break;
-                default:
-                    break;
-            }
-
-            // Execute the query and return the sorted and filtered list of supplier products
-            return View(await supplierProducts.ToListAsync());
+                Value = s.Sid.ToString(),
+                Text = $"{s.Sid} - {s.Company}"
+            }).ToList();
+            ViewData["Sid"] = new SelectList(suppliersList, "Value", "Text");
         }
-
-
 
         // GET: SupplierProducts
         public async Task<IActionResult> Index()
@@ -91,8 +71,7 @@ namespace GroovyGoodsWebApplication.Controllers
         // GET: SupplierProducts/Create
         public IActionResult Create()
         {
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Name");
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Company");
+            PopulateLists();
             return View();
         }
 
@@ -103,14 +82,21 @@ namespace GroovyGoodsWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Spid,Sid,Pid,Cost")] SupplierProduct supplierProduct)
         {
-            if (ModelState.IsValid)
+            var sidExists = from s in _context.Suppliers
+                                where s.Sid == supplierProduct.Sid
+                                select s;
+
+            var pidExists = from p in _context.Products
+                                where  p.Pid == supplierProduct.Pid
+                                select p;
+
+            if (ModelState.IsValid || (!sidExists.IsNullOrEmpty() && !pidExists.IsNullOrEmpty()))
             {
                 _context.Add(supplierProduct);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid", supplierProduct.Pid);
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid", supplierProduct.Sid);
+            PopulateLists();
             return View(supplierProduct);
         }
 
@@ -127,8 +113,7 @@ namespace GroovyGoodsWebApplication.Controllers
             {
                 return NotFound();
             }
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "Pid", supplierProduct.Pid);
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "Sid", supplierProduct.Sid);
+            PopulateLists();
             return View(supplierProduct);
         }
 
@@ -144,8 +129,17 @@ namespace GroovyGoodsWebApplication.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var sidExists = from s in _context.Suppliers
+                            where s.Sid == supplierProduct.Sid
+                            select s;
+
+            var pidExists = from p in _context.Products
+                            where p.Pid == supplierProduct.Pid
+                            select p;
+                
+            if (ModelState.IsValid || (!sidExists.IsNullOrEmpty() && !pidExists.IsNullOrEmpty()))
             {
+                
                 try
                 {
                     _context.Update(supplierProduct);
@@ -164,8 +158,7 @@ namespace GroovyGoodsWebApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Pid"] = new SelectList(_context.Products, "Pid", "name", supplierProduct.Pid);
-            ViewData["Sid"] = new SelectList(_context.Suppliers, "Sid", "company", supplierProduct.Sid);
+            PopulateLists();
             return View(supplierProduct);
         }
 
