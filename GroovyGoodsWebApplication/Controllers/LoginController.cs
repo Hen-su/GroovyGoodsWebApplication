@@ -49,8 +49,6 @@ namespace GroovyGoodsWebApplication.Controllers
                         }
                     }
                 }
-            
-            
             return View();
         }
         [HttpPost]
