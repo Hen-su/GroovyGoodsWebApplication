@@ -25,6 +25,8 @@ public partial class GroovyGoodsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+     
+
         modelBuilder.Entity<Administrator>(entity =>
         {
             entity.HasKey(e => e.Aid).HasName("PK__Administ__C6900628BEFFCA9F");

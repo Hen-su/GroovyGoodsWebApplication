@@ -12,19 +12,25 @@ namespace GroovyGoodsWebApplication.Models;
 public partial class Product
 {
     public int Pid { get; set; }
+
     [Required]
-    [StringLength (50)]
+    [StringLength(31)]
+    [RegularExpression(@"^.{0,30}$", ErrorMessage = "Input should not exceed 30 characters.")]
     public string Name { get; set; } = null!;
+
     [Required]
-    [StringLength (255)]
+    [StringLength (256)]
+    [RegularExpression(@"^.{0,255}$", ErrorMessage = "Input should not exceed 255 characters.")]
     public string? Description { get; set; }
+
     [Required]
-    [RegularExpression(@"/^\d+$/", ErrorMessage = "Value must be positive")]
+    [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Value must be valid")]
     [DisplayName("List Price ($)")]
-    [StringLength(9)]
     public decimal ListPrice { get; set; }
+
+
     [Required]
-    [RegularExpression(@"/^\d+$/", ErrorMessage = "Value must be positive")]
+    [RegularExpression(@"^\d+$", ErrorMessage = "Value must be valid")]
     public int Stock { get; set; }
 
     public virtual ICollection<SupplierProduct> SupplierProducts { get; set; } = new List<SupplierProduct>();
