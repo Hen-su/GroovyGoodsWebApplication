@@ -135,7 +135,7 @@ namespace GroovyGoodsWebApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Spid,Sid,Pid,Cost")] SupplierProduct supplierProduct)
+        public async Task<IActionResult> Create(SupplierProduct supplierProduct)
         {
             var sidExists = from s in _context.Suppliers
                                 where s.Sid == supplierProduct.Sid
@@ -147,6 +147,12 @@ namespace GroovyGoodsWebApplication.Controllers
 
             if (ModelState.IsValid || (!sidExists.IsNullOrEmpty() && !pidExists.IsNullOrEmpty()))
             {
+                var supplierProducts = new SupplierProduct
+                {
+                    Pid = supplierProduct.Pid,
+                    Sid = supplierProduct.Sid,
+                    Cost = supplierProduct.Cost
+                };
                 _context.Add(supplierProduct);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
