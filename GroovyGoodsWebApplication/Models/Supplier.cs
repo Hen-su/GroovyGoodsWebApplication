@@ -39,6 +39,7 @@ namespace GroovyGoodsWebApplication.Models
         public string City { get; set; }
 
         [Required(ErrorMessage = "Postcode is required.")]
+        [Range(0, 99999, ErrorMessage = "Postcode must be between 0 and 99999.")]
         public int Postcode { get; set; }
 
         [Required(ErrorMessage = "Country is required.")]

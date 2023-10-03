@@ -23,14 +23,13 @@ public partial class Product
     [RegularExpression(@"^.{0,255}$", ErrorMessage = "Input should not exceed 255 characters.")]
     public string? Description { get; set; }
 
-    [Required]
-    [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Value must be valid")]
+    [Required(ErrorMessage = "List Price is required.")]
+    [Range(0.01, 1000000, ErrorMessage = "List Price must be between 0.01 and 1000000.")]
     [DisplayName("List Price ($)")]
     public decimal ListPrice { get; set; }
 
-
-    [Required]
-    [RegularExpression(@"^\d+$", ErrorMessage = "Value must be valid")]
+    [Required(ErrorMessage = "Stock is required.")]
+    [Range(0, 99999, ErrorMessage = "Stock must be between 0 and 99999.")]
     public int Stock { get; set; }
 
     public virtual ICollection<SupplierProduct> SupplierProducts { get; set; } = new List<SupplierProduct>();
