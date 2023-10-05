@@ -23,6 +23,17 @@ namespace GroovyGoodsWebApplication.Controllers
         {
             return View();
         }
+
+        private string HashPassword(string password)
+        {
+                using (SHA256 sha256 = SHA256.Create())
+                {
+                    byte[] hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                    string hashString = Convert.ToBase64String(hashValue);
+                    return hashString;
+                }
+        }
+
         [HttpPost]
         public IActionResult Index(string username, string password)
         {
@@ -31,10 +42,7 @@ namespace GroovyGoodsWebApplication.Controllers
                     if (username == administrator.Username)
                     {
                         password = password + administrator.Salt;
-                        using (SHA256 sha256 = SHA256.Create())
-                        {
-                            byte[] hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                            string hashString = Convert.ToBase64String(hashValue);
+                        string hashString = HashPassword(password);
                             if (hashString == administrator.Hash)
                             {
                                 List<Claim> claims = new List<Claim>()
@@ -46,7 +54,7 @@ namespace GroovyGoodsWebApplication.Controllers
                                 HttpContext.SignInAsync(claimsPrincipal);
                                 return RedirectToAction("Index", "Products");
                             }
-                        }
+                        
                     }
                 }
             return View();

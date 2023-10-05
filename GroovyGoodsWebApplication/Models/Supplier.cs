@@ -22,6 +22,7 @@ public partial class Supplier
     public string Email { get; set; } = null!;
 
     [Required]
+    [StringLength(15)]
     public string Phone { get; set; } = null!;
 
     [Required]

@@ -1,10 +1,13 @@
 ﻿using GroovyGoodsWebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace GroovyGoodsWebApplication.Controllers
 {
     public class ProductUnitTestController : Controller
     {
+        public List<Product> productsList;
+        public List<Product> resultsList;
         public List<Product> GetProducts()
         {
             return new List<Product>
@@ -54,27 +57,79 @@ namespace GroovyGoodsWebApplication.Controllers
 
         public IActionResult Index()
         {
+            productsList = GetProducts();
             var products = from p in GetProducts()
                            select p;
-            return View(products);
+            return View(productsList);
         }
 
         public IActionResult Create()
         {
-            List<Product> productList = GetProducts();
+            productsList = GetProducts();
             Product product = new Product { Pid = 6, Name = "Violin", Description = "Handcrafted violin with bow and case", ListPrice = (decimal)199.99, Stock = 1 };
-            productList.Add(product);
-            return View(productList);
+            productsList.Add(product);
+            return View(productsList);
         }
 
         public IActionResult Edit()
         {
-            List<Product> productList = GetProducts();
-            Product product = productList[5];
+            productsList = GetProducts();
+            Product product = productsList[4];
             product.Name = "Digital Keyboard";
             product.Description = "76-key digital keyboard";
             product.ListPrice = (decimal)499.99;
-            return View(productList);
+            return View(productsList);
+        }
+
+        public IActionResult Delete()
+        {
+            productsList = GetProducts();
+            int productID = 5;
+            Product product = productsList.FirstOrDefault(p => p.Pid == productID);
+            productsList.Remove(product);
+            return View(productsList);
+        }
+
+        public IActionResult Search(string searchString)
+        {
+            List<Product> productsList = GetProducts();
+            resultsList = productsList.Where(p => p.Name.ToLower().Contains(searchString) || p.Description.ToLower().Contains(searchString)).ToList();
+            return View(resultsList);
+        }
+
+        public IActionResult Sort(string sortOrder)
+        {
+            productsList = GetProducts();
+            switch (sortOrder)
+            {
+                case "name":
+                    resultsList = productsList.OrderBy(p => p.Name).ToList();
+                    break;
+                case "description":
+                    resultsList = productsList.OrderBy(p => p.Description).ToList();
+                    break;
+                case "listPrice":
+                    resultsList = productsList.OrderBy(p => p.ListPrice).ToList();
+                    break;
+                case "stock":
+                    resultsList = productsList.OrderBy(p => p.Stock).ToList();
+                    break;
+                case "name_desc":
+                    resultsList = productsList.OrderByDescending(p => p.Name).ToList();
+                    break;
+                case "description_desc":
+                    resultsList = productsList.OrderByDescending(p => p.Description).ToList();
+                    break;
+                case "listPrice_desc":
+                    resultsList = productsList.OrderByDescending(p => p.ListPrice).ToList();
+                    break;
+                case "stock_desc":
+                    resultsList = productsList.OrderByDescending(p => p.Stock).ToList();
+                    break;
+                default:
+                    break;
+            }
+            return View(resultsList);
         }
     }
 }
