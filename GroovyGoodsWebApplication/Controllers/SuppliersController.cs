@@ -236,12 +236,18 @@ namespace GroovyGoodsWebApplication.Controllers
             {
                 return Problem("Entity set 'GroovyGoodsContext.Suppliers'  is null.");
             }
+
             var supplier = await _context.Suppliers.FindAsync(id);
             if (supplier != null)
             {
+                // Remove related records in Supplier_Product table
+                var supplierProducts = _context.SupplierProducts.Where(sp => sp.Sid == id).ToList();
+                _context.SupplierProducts.RemoveRange(supplierProducts);
+
+                // Remove the supplier
                 _context.Suppliers.Remove(supplier);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

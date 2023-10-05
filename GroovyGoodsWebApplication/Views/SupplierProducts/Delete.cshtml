@@ -12,23 +12,25 @@
     <h4>SupplierProduct</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            Company
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SidNavigation.Company)
+        </dd>
+        <dt class="col-sm-2">
+
+            Product Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PidNavigation.Name)
+        </dd>
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Cost)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Cost)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PidNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PidNavigation.Pid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SidNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SidNavigation.Sid)
         </dd>
     </dl>
     

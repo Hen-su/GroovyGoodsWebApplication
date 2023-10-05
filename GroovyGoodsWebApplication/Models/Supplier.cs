@@ -2,44 +2,51 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace GroovyGoodsWebApplication.Models;
-
-public partial class Supplier
+namespace GroovyGoodsWebApplication.Models
 {
-    public int Sid { get; set; }
+    public partial class Supplier
+    {
+        public int Sid { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string Company { get; set; } = null!;
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(31)]
+        [RegularExpression(@"^.{0,30}$", ErrorMessage = "Input should not exceed 30 characters.")]
+        public string Company { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string ContactName { get; set; } = null!;
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(31)]
+        [RegularExpression(@"^.{0,30}$", ErrorMessage = "Input should not exceed 30 characters.")]
+        public string ContactName { get; set; }
 
-    [Required]
-    [RegularExpression(@"^[A-Za-z0-9+_.-]+@(.+)$", ErrorMessage = "Please enter a valid email")]
-    [StringLength(50)]
-    public string Email { get; set; } = null!;
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(51)]
+        [RegularExpression(@"^(?=.{1,50}$)([A-Za-z0-9+_.-]+@(.+))$", ErrorMessage = "Please enter a valid email: [+, -, _, ., letter or digits]@valid domain email address (up to 50 characters).")]
+        public string Email { get; set; }
 
-    [Required]
-    [StringLength(15)]
-    public string Phone { get; set; } = null!;
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(17)]
+        [RegularExpression(@"^[\d+()-]{1,16}$", ErrorMessage = "Please enter a valid phone number up to 16 characters (+, -, () symbols only).")]
+        public string Phone { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string Address { get; set; } = null!;
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(51)]
+        [RegularExpression(@"^.{0,50}$", ErrorMessage = "Input should not exceed 50 characters.")]
+        public string Address { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string City { get; set; } = null!;
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(21)]
+        [RegularExpression(@"^.{0,20}$", ErrorMessage = "Input should not exceed 20 characters.")]
+        public string City { get; set; }
 
-    [Required]
-    [StringLength(10)]
-    public int Postcode { get; set; }
+        [Required(ErrorMessage = "This field is required.")]
+        [Range(0, 99999, ErrorMessage = "Postcode must be between 0 and 99999.")]
+        public int Postcode { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string Country { get; set; } = null!;
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(21)]
+        [RegularExpression(@"^.{0,20}$", ErrorMessage = "Input should not exceed 20 characters.")]
+        public string Country { get; set; }
 
-    public virtual ICollection<SupplierProduct> SupplierProducts { get; set; } = new List<SupplierProduct>();
+        public virtual ICollection<SupplierProduct> SupplierProducts { get; set; } = new List<SupplierProduct>();
+    }
 }

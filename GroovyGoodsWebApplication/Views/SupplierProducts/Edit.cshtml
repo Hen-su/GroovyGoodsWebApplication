@@ -13,13 +13,14 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Spid" />
-            <div class="form-group"><br>
-                <label asp-for="Sid" class="control-label"></label><br><br>
+            <div class="form-group">
+                <br>
+                <label for="Sid" class="control-label">Supplier Name</label><br><br>
                 <select asp-for="Sid" class="form-control" asp-items="ViewBag.Sid"></select>
                 <span asp-validation-for="Sid" class="text-danger"></span>
             </div>
             <div class="form-group"><br>
-                <label asp-for="Pid" class="control-label"></label><br><br>
+                <label asp-for="Pid" class="control-label">Product Name</label><br><br>
                 <select asp-for="Pid" class="form-control" asp-items="ViewBag.Pid"></select>
                 <span asp-validation-for="Pid" class="text-danger"></span>
             </div>

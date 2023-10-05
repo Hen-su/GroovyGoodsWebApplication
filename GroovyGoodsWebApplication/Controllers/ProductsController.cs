@@ -202,14 +202,20 @@ namespace GroovyGoodsWebApplication.Controllers
         {
             if (_context.Products == null)
             {
-                return Problem("Entity set 'GroovyGoodsContext.Products'  is null.");
+                return Problem("Entity set 'GroovyGoodsContext.Products' is null.");
             }
+
             var product = await _context.Products.FindAsync(id);
             if (product != null)
             {
+                // Remove related records in Supplier_Product table
+                var supplierProducts = _context.SupplierProducts.Where(sp => sp.Pid == id).ToList();
+                _context.SupplierProducts.RemoveRange(supplierProducts);
+
+                // Remove the product
                 _context.Products.Remove(product);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
