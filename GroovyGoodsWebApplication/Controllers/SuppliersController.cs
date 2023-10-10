@@ -25,7 +25,7 @@ namespace GroovyGoodsWebApplication.Controllers
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             // Sorting parameters
-            ViewBag.CompanySortParm = string.IsNullOrEmpty(sortOrder) ? "company_desc" : "";
+            ViewBag.CompanySortParm = sortOrder == "company" ? "company_desc" : "company";
             ViewBag.ContactNameSortParm = sortOrder == "contactName" ? "contactName_desc" : "contactName";
             ViewBag.EmailSortParm = sortOrder == "email" ? "email_desc" : "email";
             ViewBag.PhoneSortParm = sortOrder == "phone" ? "phone_desc" : "phone";
@@ -78,6 +78,9 @@ namespace GroovyGoodsWebApplication.Controllers
                     break;
                 case "country":
                     suppliers = suppliers.OrderBy(s => s.Country);
+                    break;
+                case "company_desc":
+                    suppliers = suppliers.OrderByDescending(s => s.Company);
                     break;
                 case "contactName_desc":
                     suppliers = suppliers.OrderByDescending(s => s.ContactName);

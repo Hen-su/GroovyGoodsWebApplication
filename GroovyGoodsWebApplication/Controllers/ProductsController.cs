@@ -24,7 +24,7 @@ namespace GroovyGoodsWebApplication.Controllers
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             // Sorting parameters
-            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.NameSortParm = sortOrder == "name" ?  "name_desc" : "name";
             ViewBag.DescriptionSortParm = sortOrder == "description" ? "description_desc" : "description";
             ViewBag.ListPriceSortParm = sortOrder == "listPrice" ? "listPrice_desc" : "listPrice";
             ViewBag.StockSortParm = sortOrder == "stock" ? "stock_desc" : "stock";
