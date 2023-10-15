@@ -10,6 +10,7 @@ namespace GroovyGoodsWebApplication.Controllers
         public List<SupplierProduct> supplierProductsList;
         public List<Product> productsList;
         public List<Supplier> suppliersList;
+        public List<SupplierProduct> resultsList;
         public List<Supplier> GetSuppliers()
         {
             return new List<Supplier>
@@ -141,18 +142,11 @@ namespace GroovyGoodsWebApplication.Controllers
 
         public IActionResult Delete()
         {
+            int id = 3;
             supplierProductsList = GetSupplierProducts();
-            supplierProductsList.Remove(supplierProductsList.Last());
+            SupplierProduct supplierProduct = supplierProductsList.FirstOrDefault(s => s.Spid == id);
+            supplierProductsList.Remove(supplierProduct);
             return View(supplierProductsList);
-        }
-
-        public IActionResult Search(string searchString) 
-        {
-            supplierProductsList = GetSupplierProducts();
-            productsList = GetProducts();
-            suppliersList = GetSuppliers();
-            var result = supplierProductsList.Select(sp => sp.PidNavigation.Name.ToLower() == searchString || sp.SidNavigation.Company.ToLower() == searchString).ToList();
-            return View(result);
         }
     }
 }

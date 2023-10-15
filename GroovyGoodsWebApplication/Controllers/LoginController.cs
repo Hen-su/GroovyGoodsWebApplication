@@ -1,6 +1,8 @@
 ﻿using GroovyGoodsWebApplication.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -21,6 +23,10 @@ namespace GroovyGoodsWebApplication.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Products");
+            }
             return View();
         }
 
@@ -34,6 +40,7 @@ namespace GroovyGoodsWebApplication.Controllers
                 }
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Index(string username, string password)
         {
@@ -59,7 +66,8 @@ namespace GroovyGoodsWebApplication.Controllers
                 }
             return View();
         }
-        [HttpPost]
+
+        [Authorize]
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync();

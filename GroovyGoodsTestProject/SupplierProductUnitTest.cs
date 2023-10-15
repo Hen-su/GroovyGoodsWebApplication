@@ -85,5 +85,6 @@ namespace GroovyGoodsTestProject
             List<SupplierProduct> supplierProducts = controller.supplierProductsList;
             Assert.AreEqual(2, supplierProducts.Count);
         }
+
     }
 }
