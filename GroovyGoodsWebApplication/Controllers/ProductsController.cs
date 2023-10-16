@@ -20,6 +20,7 @@ namespace GroovyGoodsWebApplication.Controllers
             _context = context;
         }
 
+        //Sort and search functions
         [HttpGet("Products/Index")]
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
@@ -41,7 +42,7 @@ namespace GroovyGoodsWebApplication.Controllers
                     p.Description.Contains(searchString));
             }
 
-            // Apply sorting
+            // Apply sorting using table headings
             switch (sortOrder)
             {
                 case "name":

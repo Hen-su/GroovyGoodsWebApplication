@@ -21,6 +21,7 @@ namespace GroovyGoodsWebApplication.Controllers
             _db = db;
         }
 
+        //Load webpage and redirects if user is already authenticated
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -30,6 +31,7 @@ namespace GroovyGoodsWebApplication.Controllers
             return View();
         }
 
+        //hash a string using sha256 and convert to base64 string
         private string HashPassword(string password)
         {
                 using (SHA256 sha256 = SHA256.Create())
@@ -40,6 +42,7 @@ namespace GroovyGoodsWebApplication.Controllers
                 }
         }
 
+        //login user with credentials and redirect to landing page
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Index(string username, string password)
@@ -67,6 +70,7 @@ namespace GroovyGoodsWebApplication.Controllers
             return View();
         }
 
+        //logout user and redirect to login page
         [Authorize]
         public IActionResult LogOut()
         {

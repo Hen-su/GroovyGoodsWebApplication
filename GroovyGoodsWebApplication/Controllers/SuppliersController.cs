@@ -20,11 +20,11 @@ namespace GroovyGoodsWebApplication.Controllers
             _context = context;
         }
 
-
+        //Sort and search functions
         [HttpGet("Suppliers/Index")]
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            // Sorting parameters
+            // Sorting parameters using table headings
             ViewBag.CompanySortParm = sortOrder == "company" ? "company_desc" : "company";
             ViewBag.ContactNameSortParm = sortOrder == "contactName" ? "contactName_desc" : "contactName";
             ViewBag.EmailSortParm = sortOrder == "email" ? "email_desc" : "email";

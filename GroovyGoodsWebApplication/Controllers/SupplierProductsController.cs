@@ -22,6 +22,7 @@ namespace GroovyGoodsWebApplication.Controllers
             _context = context;
         }
 
+        //Populate dropdown lists 
         private void PopulateLists()
         {
             //Get list of products with id and name
@@ -48,7 +49,7 @@ namespace GroovyGoodsWebApplication.Controllers
             return View(await groovyGoodsContext.ToListAsync());
         }
 
-
+        //Sort and search functions
         [HttpGet("SupplierProducts/Index")]
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
@@ -70,7 +71,7 @@ namespace GroovyGoodsWebApplication.Controllers
                     sp.Cost.ToString().Contains(searchString));
             }
 
-            // Apply sorting
+            // Apply sorting using table headings
             switch (sortOrder)
             {
                 case "name":
