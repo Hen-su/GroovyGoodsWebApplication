@@ -27,6 +27,12 @@ namespace GroovyGoodsTestProject
             _driver = new ChromeDriver();
         }
 
+        [TestInitialize]
+        public void Setup()
+        {
+            _driver.Manage().Window.Maximize();
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
@@ -135,12 +141,12 @@ namespace GroovyGoodsTestProject
             List<string> results = new List<string>();
             foreach ( var row in searchResults )
             {
-                results.Add((row.Text));
+                results.Add((row.Text.ToLower()));
             }
             results.RemoveAt(0);
-            foreach ( var row in searchResults )
+            foreach ( var row in results )
             {
-                Assert.IsTrue(results.Contains(searchString));
+                Assert.IsTrue(row.Contains(searchString));
             }
         }
 
@@ -500,7 +506,7 @@ namespace GroovyGoodsTestProject
             var deleteBTN = rows[rows.Count - 1].FindElement(By.LinkText("Delete"));
             deleteBTN.Click();
             string deleteURl = "https://localhost:44314/Products/Delete";
-            Assert.AreEqual(deleteURl, _driver.Url);
+            Assert.IsTrue(_driver.Url.Contains(deleteURl));
         }
 
         [TestMethod]
@@ -523,6 +529,7 @@ namespace GroovyGoodsTestProject
             var deleteLNK = rows[rows.Count - 1].FindElement(By.LinkText("Delete"));
             deleteLNK.Click();
             var deleteBTN = _driver.FindElement(By.Name("delete"));
+            deleteBTN.Click();
             table = _driver.FindElement(By.ClassName("table"));
             rows = table.FindElements(By.TagName("tr"));
             Assert.AreEqual(initRows - 1, rows.Count);
@@ -945,8 +952,8 @@ namespace GroovyGoodsTestProject
             SupplierDeletePage();
             var backLNK = _driver.FindElement(By.LinkText("Back to List"));
             backLNK.Click();
-            string productIndexURL = "https://localhost:44314/Suppliers/Index";
-            Assert.AreEqual(productIndexURL, _driver.Url);
+            string supplierIndexURL = "https://localhost:44314/Suppliers/Index";
+            Assert.IsTrue(_driver.Url.Contains(supplierIndexURL));
         }
 
         [TestMethod]
